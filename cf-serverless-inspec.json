@@ -1,0 +1,55 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: 'CloudFormation Stack to deploy serverless InSpec'
+Parameters:
+  GithubRepo:
+    Type: String
+    Default: https://github.com/martezr/serverless-inspec-profile.git
+    Description: Enter the Github repository that contains the InSpec AWS profile.
+  InSpecAWSRegion:
+    Type: String
+    Default: us-east-1
+    Description: Enter the AWS region for InSpec to scan.
+  S3BucketName:
+    Type: String
+    Description: Enter the name of the S3 bucket where the lambda deployment package is stored.
+Resources:
+  InSpecLambdaRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: 'InSpecLambdaRole'
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/ReadOnlyAccess'
+        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+  InSpecLambda:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: InSpecLambda
+      Description: InSpec Compliance Lambda
+      Timeout: '45'
+      Environment:
+        Variables:
+          HOME: /tmp
+          GITHUB_REPO: !Ref GithubRepo
+          INSPEC_AWS_REGION: !Ref InSpecAWSRegion
+      Handler: lambda.lambda_handler
+      Runtime: python3.6
+      Role:
+        'Fn::GetAtt':
+          - InSpecLambdaRole
+          - Arn
+      Code:
+        S3Bucket: !Ref S3BucketName
+        S3Key: lambda.zip
+  InSpecLambdaS3Bucket:
+    Type: AWS::S3::Bucket
+    BucketName: !Ref S3BucketName
+
