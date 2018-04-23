@@ -11,7 +11,7 @@ WORKDIR ruby-$RUBY_VERSION
 RUN ./configure --prefix=/var/task/customruby --disable-werror --disable-largefile --disable-install-doc --disable-install-rdoc --disable-install-capi --without-gmp --without-valgrind
 RUN make
 RUN make install
-RUN /var/task/customruby/bin/gem install $GEM_INSTALLED
+RUN /var/task/customruby/bin/gem install inspec -v 2.1.21
 
 COPY lambda.py /var/task
 WORKDIR /var/task
