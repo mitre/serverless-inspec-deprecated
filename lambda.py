@@ -42,7 +42,6 @@ def lambda_handler(event, context):
     output = p.stdout.read()
     print(output.decode('utf-8'))
 
-
     """
     Create JSON File
     """

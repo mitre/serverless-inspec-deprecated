@@ -12,6 +12,9 @@ Parameters:
   S3BucketName:
     Type: String
     Description: Enter the name of the S3 bucket where the lambda deployment package is stored.
+  InSpecOutputBucket:
+    Type: String
+    Description: Enter the name of the S3 bucket where the InSpect json file will be written.
 Resources:
   InSpecLambdaRole:
     Type: 'AWS::IAM::Role'
@@ -26,6 +29,21 @@ Resources:
                 - lambda.amazonaws.com
             Action:
               - 'sts:AssumeRole'
+      Path: "/"
+      Policies: 
+        - 
+          PolicyName: "root"
+          PolicyDocument: 
+            Version: "2012-10-17"
+            Statement: 
+              - 
+                Effect: "Allow"
+                Action: "s3:PutObject"
+                Resource: !Join 
+                  - ''
+                  - - 'arn:aws:s3:::'
+                    - !Ref InSpecOutputBucket
+                    - /*
       ManagedPolicyArns:
         - 'arn:aws:iam::aws:policy/ReadOnlyAccess'
         - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
@@ -40,6 +58,8 @@ Resources:
           HOME: /tmp
           GITHUB_REPO: !Ref GithubRepo
           INSPEC_AWS_REGION: !Ref InSpecAWSRegion
+          OUTPUT_S3_BUCKET: !Ref InSpecOutputBucket
+          S3_BUCKET: !Ref S3BucketName
       Handler: lambda.lambda_handler
       Runtime: python3.6
       Role:
@@ -49,7 +69,4 @@ Resources:
       Code:
         S3Bucket: !Ref S3BucketName
         S3Key: lambda.zip
-  InSpecLambdaS3Bucket:
-    Type: AWS::S3::Bucket
-    BucketName: !Ref S3BucketName
 
