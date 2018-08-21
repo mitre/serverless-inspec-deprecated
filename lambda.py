@@ -54,7 +54,6 @@ def lambda_handler(event, context):
     """
     Upload InSpec output to S3 Bucket
     """
-
     s3 = boto3.client('s3')
     s3.upload_file(outputfile, s3_bucket, filename)
 

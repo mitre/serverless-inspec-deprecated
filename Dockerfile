@@ -1,6 +1,7 @@
 FROM lambci/lambda:build-python3.6
-ENV RUBY_VERSION 2.5.1
-ENV GEM_INSTALLED inspec
+ARG RUBY_VERSION=2.5.1
+ARG GEM_INSTALLED=inspec
+ARG INSPEC_VERSION=2.2.64
 
 RUN yum -y install zlib-devel gcc zip
 
@@ -12,7 +13,7 @@ RUN ./configure --prefix=/var/task/customruby --disable-werror --disable-largefi
 RUN make
 RUN make install
 RUN echo "gem: --no-ri --no-rdoc" > ~/.gemrc
-RUN /var/task/customruby/bin/gem install inspec -v 2.1.21 --no-ri --no-doc
+RUN /var/task/customruby/bin/gem install inspec -v $INSPEC_VERSION --no-ri --no-doc
 
 COPY lambda.py /var/task
 WORKDIR /var/task

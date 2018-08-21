@@ -39,7 +39,7 @@ Upload the deployment package to an S3 bucket
 
 
 
-## Support Environment Variables
+## Supported Environment Variables
 
 * HOME: /tmp
 * GITHUB_REPO:
