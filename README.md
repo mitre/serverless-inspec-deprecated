@@ -24,13 +24,12 @@ cd serverless-inspec
 Build the package
 
 ```bash
-./build.sh
+scripts/build.sh
 ```
 
-Upload the deployment package to an S3 bucket
-
+Deploy the cloudformation template
 ```bash
-
+scripts/deploy.sh $inspec_bucket $output_bucket
 ```
 
 # Lambda Function

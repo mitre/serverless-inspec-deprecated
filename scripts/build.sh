@@ -7,8 +7,8 @@ docker build --rm -t rubylambda .
 docker run --name rubylambda rubylambda bash
 
 # Copy Lambda zip file
-rm -Rf lambda.zip
-docker cp rubylambda:/var/task/lambda.zip .
+rm -Rf ../lambda.zip
+docker cp rubylambda:/var/task/lambda.zip ../
 
 # Cleanup Docker Container
 docker rm rubylambda

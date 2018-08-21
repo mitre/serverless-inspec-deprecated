@@ -11,3 +11,6 @@ aws cloudformation deploy --template-file cf-serverless-inspec.json --stack-name
 
 # Test Lambda Function
 aws lambda invoke --function-name InSpecLambda --invocation-type RequestResponse --log-type Tail --payload '{}' outfile.txt
+
+# Upload lambda function to S3
+aws s3 cp lambda.zip s3://$INSPECBUCKET
