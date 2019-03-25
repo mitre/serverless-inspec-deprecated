@@ -22,4 +22,10 @@ git clone https://github.com/martezr/serverless-inspec.git
 cd serverless-inspec
 
 # Build gem dependencies
-docker run --rm -it -v $PWD:/var/gem_build -w /var/gem_build lambci/lambda:build-ruby2.5 bundle install --path=.
+chmod +x build.sh && sh ./build.sh
+
+# Change directory
+cd code
+
+# Deploy stack
+sls deploy

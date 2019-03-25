@@ -70,6 +70,68 @@ data "aws_iam_policy_document" "inspec-serverless" {
     resources = ["*"]
   }
 
+
+statement {
+   sid    = "IAMAccess"
+   effect = "Allow"
+   actions = [
+                "iam:AttachRolePolicy",
+                "iam:CreateRole",
+                "iam:DeleteRole",
+                "iam:DeleteRolePolicy",
+                "iam:GetRole",
+                "iam:PassRole",
+                "iam:PutRolePolicy"
+],
+   resources = ["*"]
+}
+
+  statement {
+    sid    = "S3Access"
+    effect = "Allow"
+    actions = [
+                "s3:CreateBucket",
+                "s3:DeleteBucket",
+                "s3:DeleteBucketPolicy",
+                "s3:DeleteObject",
+                "s3:DeleteObjectVersion",
+                "s3:GetObject",
+                "s3:GetObjectVersion",
+                "s3:ListAllMyBuckets",
+                "s3:ListBucket",
+                "s3:PutBucketNotification",
+                "s3:PutBucketPolicy",
+                "s3:PutBucketTagging",
+                "s3:PutBucketWebsite",
+                "s3:PutEncryptionConfiguration",
+                "s3:PutObject"
+    ],
+    resources = ["*"]
+  }
+
+  statement {
+    sid    = "CloudFormationAccess"
+    effect = "Allow"
+    actions = [
+       "cloudformation:CancelUpdateStack",
+       "cloudformation:ContinueUpdateRollback",
+       "cloudformation:CreateChangeSet",
+       "cloudformation:CreateStack",
+       "cloudformation:CreateUploadBucket",
+       "cloudformation:DeleteStack",
+       "cloudformation:Describe*",
+       "cloudformation:EstimateTemplateCost",
+       "cloudformation:ExecuteChangeSet",
+       "cloudformation:Get*",
+       "cloudformation:List*",
+       "cloudformation:PreviewStackUpdate",
+       "cloudformation:UpdateStack",
+       "cloudformation:UpdateTerminationProtection",
+       "cloudformation:ValidateTemplate"
+    ],
+    resources = ["*"]
+  }
+
   statement {
     sid    = "LogGroupAccess"
     effect = "Allow"
