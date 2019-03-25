@@ -1,4 +1,4 @@
-service: inspec-scan
+service: inspec-serverless
 
 provider:
   name: aws
@@ -6,16 +6,15 @@ provider:
   region: us-east-1
   iamManagedPolicies:
     - 'arn:aws:iam::aws:policy/ReadOnlyAccess'
-    - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+  environment:
+    HOME: /tmp
+    INSPEC_PROFILE: "https://github.com/martezr/serverless-inspec-profile"
 
 functions:
   inspec_scan:
     handler: handler.inspec_scan
     layers:
       - {Ref: InspecLambdaLayer }
-
-environment:
-  HOME: /tmp
 
 layers:
   inspec:
