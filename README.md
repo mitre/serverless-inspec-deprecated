@@ -1,11 +1,4 @@
-# serverless-inspec: InSpec running serverless
-
-
-# Requirements
-
-serverless-inspec requires the following
-
-* Docker installed on the build system
+# serverless-inspec
 
 # Getting Started
 
@@ -21,25 +14,27 @@ Change directory to serverless-inspec
 cd serverless-inspec
 ```
 
-Build the package
+Provision the AWS EC2 instance
 
 ```bash
-scripts/build.sh
+cd aws-terraform
 ```
 
-Deploy the cloudformation template
 ```bash
-scripts/deploy.sh $inspec_bucket $output_bucket
+terraform init
 ```
 
-# Lambda Function
+```bash
+terraform apply --auto-approve
+```
 
-## IAM Permissions
+SSH to the EC2 instance and run sls deploy
 
+```bash
+cd /serverless-inspec/code
+```
 
+```bash
+sls deploy
+```
 
-## Supported Environment Variables
-
-* HOME: /tmp
-* GITHUB_REPO:
-* INSPEC_AWS_REGION:
