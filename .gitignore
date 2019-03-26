@@ -49,3 +49,4 @@ outfile.txt
 terraform.tfstate
 *.tfstate*
 terraform.tfvars
+.vagrant
