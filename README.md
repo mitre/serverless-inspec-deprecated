@@ -40,9 +40,44 @@ SSH to the EC2 instance and run sls deploy
 cd /serverless-inspec/code
 ```
 
+### Deploying the Lambda function
+
+The Lambda function can be deployed using the provided serverless deployment file by running the following command from the "code" directory in the repository.
+
 ```bash
-sls deploy
+[root@ip-172-31-2-252 code]# sls deploy
+Serverless: Packaging service...
+Serverless: Excluding development dependencies...
+Serverless: Excluding development dependencies...
+Serverless: Creating Stack...
+Serverless: Checking Stack create progress...
+.....
+Serverless: Stack create finished...
+Serverless: Uploading CloudFormation file to S3...
+Serverless: Uploading artifacts...
+Serverless: Uploading service inspec-serverless.zip file to S3 (372 B)...
+Serverless: Uploading service inspec.zip file to S3 (37.66 MB)...
+Serverless: Validating template...
+Serverless: Updating Stack...
+Serverless: Checking Stack update progress...
+..................
+Serverless: Stack update finished...
+Service Information
+service: inspec-serverless
+stage: prod
+region: us-east-1
+stack: inspec-serverless-prod
+resources: 6
+api keys:
+  None
+endpoints:
+  None
+functions:
+  inspec_scan: inspec-serverless-prod-inspec_scan
+layers:
+  inspec: arn:aws:lambda:us-east-1:684882843674:layer:inspec:7
 ```
+
 ## Environment Variables
 
 The following environment variables are defined for the Lambda function.
@@ -58,7 +93,7 @@ The following environment variables are defined for the Lambda function.
 
 |                |                                                  |
 | -------------- | ------------------------------------------------ |
-| **Author:**    | Martez Reed (<martez.reed@greenreedtech.com)     |
+| **Author:**    | Martez Reed (<martez.reed@greenreedtech.com>)    |
 | **Copyright:** | Copyright (c) 2018-2019 Green Reed Technology    |
 | **License:**   | Apache License, Version 2.0                      |
 
