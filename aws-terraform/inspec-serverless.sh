@@ -22,4 +22,4 @@ git clone https://github.com/martezr/serverless-inspec.git
 cd serverless-inspec
 
 # Build gem dependencies
-chmod +x build.sh && sh ./build.sh
+chmod +x build.sh && ./build.sh
