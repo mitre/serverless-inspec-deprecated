@@ -5,6 +5,8 @@ provider:
   runtime: ruby2.5
   region: us-east-1
   stage: prod
+  memorySize: 256
+  timeout: 15
   iamManagedPolicies:
     - 'arn:aws:iam::aws:policy/ReadOnlyAccess'
   environment:
