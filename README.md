@@ -43,6 +43,16 @@ cd /serverless-inspec/code
 ```bash
 sls deploy
 ```
+## Environment Variables
+
+The following environment variables are defined for the Lambda function.
+
+| Name | Description | Type | Default | Required |
+|------|-------------|:----:|:-----:|:-----:|
+| HOME | The HOME environment variable for enabling proper execution of the Lambda function | string | `/tmp` | yes |
+| INSPEC_PROFILE | The github url of the InSpec profile to run | string | `-` | yes |
+| S3_DATA_BUCKET | The name of the Amazon Web Services (AWS) S3 bucket to store the JSON output file | string | `-` | no |
+
 
 ## License
 
