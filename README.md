@@ -40,6 +40,36 @@ SSH to the EC2 instance and run sls deploy
 cd /serverless-inspec/code
 ```
 
+### Serverless Deployment File
+
+The Lambda function is deployed using the Serverless framework (https://serverless.com) to simplify the packaging and deployment. Included in the repository is the code/serverless.yaml deployment file that can be used and modifications can be made by referencing the Serverless documentation (https://serverless.com/framework/docs/providers/aws/guide/serverless.yml/).
+
+```bash
+service: inspec-serverless
+
+provider:
+  name: aws
+  runtime: ruby2.5
+  region: us-east-1
+  stage: prod
+  iamManagedPolicies:
+    - 'arn:aws:iam::aws:policy/ReadOnlyAccess'
+  environment:
+    HOME: /tmp
+    INSPEC_PROFILE: "https://github.com/martezr/serverless-inspec-profile"
+    S3_DATA_BUCKET: mreed-bucket
+
+functions:
+  inspec_scan:
+    handler: handler.inspec_scan
+    layers:
+      - {Ref: InspecLambdaLayer }
+
+layers:
+  inspec:
+    path: layer
+```
+
 ### Deploying the Lambda function
 
 The Lambda function can be deployed using the provided serverless deployment file by running the following command from the "code" directory in the repository.
