@@ -4,15 +4,15 @@ provider:
   name: aws
   runtime: ruby2.5
   region: us-east-1
-  stage: prod
+  stage: ${opt:stage, 'dev'}
   memorySize: 256
   timeout: 15
   iamManagedPolicies:
     - 'arn:aws:iam::aws:policy/ReadOnlyAccess'
   environment:
     HOME: /tmp
-    INSPEC_PROFILE: "https://github.com/martezr/serverless-inspec-profile"
-    S3_DATA_BUCKET: mreed-bucket
+    INSPEC_PROFILE: ${opt:inspec_profile, 'https://github.com/martezr/serverless-inspec-profile'}
+    S3_DATA_BUCKET: ${opt:s3_data_bucket}
 
 functions:
   inspec_scan:
