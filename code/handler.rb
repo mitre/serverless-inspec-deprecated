@@ -26,7 +26,7 @@ def inspec_scan(event:, context:)
 
     # Set InSpec Target
     profiles = event['inspec_profiles']
-    if ENV['INSPEC_PROFILE'].nil?
+    if event.key?("inspec_profiles")
       profiles.each do |profile|
         client.add_target(profile,opts)
       end

@@ -6,7 +6,7 @@ provider:
   region: us-east-1
   stage: ${opt:stage, 'dev'}
   memorySize: 256
-  timeout: 15
+  timeout: 30
   iamManagedPolicies:
     - 'arn:aws:iam::aws:policy/ReadOnlyAccess'
   environment:
