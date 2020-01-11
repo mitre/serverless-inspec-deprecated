@@ -1,13 +1,5 @@
 provider "aws" {
-  region = "${var.region}"
-}
-
-data "aws_vpc" "default" {
-  default = true
-}
-
-data "aws_subnet_ids" "all" {
-  vpc_id = "${data.aws_vpc.default.id}"
+  region = var.region
 }
 
 data "aws_ami" "amazon_linux" {
@@ -33,18 +25,18 @@ data "aws_ami" "amazon_linux" {
 ## InSpec builder
 resource "aws_iam_instance_profile" "serverless-inspec" {
   name = "serverless-inspec-instance-profile"
-  role = "${aws_iam_role.serverless-inspec.name}"
+  role = aws_iam_role.serverless-inspec.name
 }
 
 resource "aws_iam_role" "serverless-inspec" {
   name               = "serverless-inspec-role"
-  assume_role_policy = "${data.aws_iam_policy_document.assume_role.json}"
+  assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
 resource "aws_iam_role_policy" "serverless-inspec" {
   name   = "serverless-inspec-role-policy"
-  role   = "${aws_iam_role.serverless-inspec.id}"
-  policy = "${data.aws_iam_policy_document.serverless-inspec.json}"
+  role   = aws_iam_role.serverless-inspec.id
+  policy = data.aws_iam_policy_document.serverless-inspec.json
 }
 
 data "aws_iam_policy_document" "assume_role" {
@@ -60,31 +52,31 @@ data "aws_iam_policy_document" "assume_role" {
 }
 
 data "aws_iam_policy_document" "serverless-inspec" {
-
   statement {
     sid    = "LambdaAccess"
     effect = "Allow"
     actions = [
-      "lambda:*"
-    ],
+      "lambda:*",
+    ]
     resources = ["*"]
   }
 
-
-statement {
-   sid    = "IAMAccess"
-   effect = "Allow"
-   actions = [
+  statement {
+    sid    = "IAMAccess"
+    effect = "Allow"
+    actions = [
       "iam:AttachRolePolicy",
       "iam:CreateRole",
       "iam:DeleteRole",
       "iam:DeleteRolePolicy",
+      "iam:DetachRolePolicy",
       "iam:GetRole",
+      "iam:GetRolePolicy",
       "iam:PassRole",
-      "iam:PutRolePolicy"
-],
-   resources = ["*"]
-}
+      "iam:PutRolePolicy",
+    ]
+    resources = ["*"]
+  }
 
   statement {
     sid    = "S3Access"
@@ -95,6 +87,7 @@ statement {
       "s3:DeleteBucketPolicy",
       "s3:DeleteObject",
       "s3:DeleteObjectVersion",
+      "s3:GetBucketPolicy",
       "s3:GetObject",
       "s3:GetObjectVersion",
       "s3:ListAllMyBuckets",
@@ -104,8 +97,8 @@ statement {
       "s3:PutBucketTagging",
       "s3:PutBucketWebsite",
       "s3:PutEncryptionConfiguration",
-      "s3:PutObject"
-    ],
+      "s3:PutObject",
+    ]
     resources = ["*"]
   }
 
@@ -127,8 +120,8 @@ statement {
       "cloudformation:PreviewStackUpdate",
       "cloudformation:UpdateStack",
       "cloudformation:UpdateTerminationProtection",
-      "cloudformation:ValidateTemplate"
-    ],
+      "cloudformation:ValidateTemplate",
+    ]
     resources = ["*"]
   }
 
@@ -142,7 +135,7 @@ statement {
       "logs:DescribeLogGroups",
       "logs:DescribeLogStreams",
       "logs:FilterLogEvents",
-      "logs:GetLogEvents"
+      "logs:GetLogEvents",
     ]
 
     resources = ["*"]
@@ -150,20 +143,20 @@ statement {
 }
 
 module "serverless-inspec" {
-  source = "terraform-aws-modules/ec2-instance/aws"
+  source         = "terraform-aws-modules/ec2-instance/aws"
   instance_count = 1
 
-  name                          = "serverless-inspec"
-  ami                           = "${data.aws_ami.amazon_linux.id}"
-  associate_public_ip_address   = true
-  instance_type                 = "${var.instance_type}"
-  iam_instance_profile          = "${aws_iam_instance_profile.serverless-inspec.id}"
-  key_name                      = "${var.key_name}"
-  subnet_id                     = "${var.subnet_id}"
-  vpc_security_group_ids        = "${var.vpc_security_group_ids}"
-  user_data                     = "${file("serverless-inspec.sh")}"
+  name                        = "serverless-inspec"
+  ami                         = data.aws_ami.amazon_linux.id
+  associate_public_ip_address = true
+  instance_type               = var.instance_type
+  iam_instance_profile        = aws_iam_instance_profile.serverless-inspec.id
+  key_name                    = var.key_name
+  subnet_id                   = var.subnet_id
+  vpc_security_group_ids      = var.vpc_security_group_ids
+  user_data                   = file("serverless-inspec.sh")
 
-  tags {
-        DeployFrom  = "terraform"
+  tags = {
+    DeployFrom = "terraform"
   }
 }

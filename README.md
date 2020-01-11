@@ -155,6 +155,20 @@ Run the `terraform destroy` command with the `--auto-approve` flag to prevent be
 terraform destroy --auto-approve -var-file=grt-dev.tfvars
 ```
 
+## InSpec Lambda Payload
+The Lambda function can be invoked in a generic manner that accepts parameters to specified in the JSON payload sent to the function during invocation.
+
+```json
+{
+  "s3_bucket": "",
+  "inspec_profiles": ["https://github.com/martezr/serverless-inspec-profile"]
+}
+```
+
+| Name | Description | Type | Default | Required |
+|------|-------------|:----:|:-----:|:-----:|
+| inspec_profiles | The github url of the InSpec profile(s) to run | array | `-` | yes |
+| s3_bucket | The name of the Amazon Web Services (AWS) S3 bucket to store the JSON output file | string | `-` | yes |
 
 ## License
 

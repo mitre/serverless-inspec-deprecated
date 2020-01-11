@@ -11,7 +11,7 @@ provider:
     - 'arn:aws:iam::aws:policy/ReadOnlyAccess'
   environment:
     HOME: /tmp
-    INSPEC_PROFILE: ${opt:inspec_profile, 'https://github.com/martezr/serverless-inspec-profile'}
+    INSPEC_PROFILE: ${opt:inspec_profile}
     S3_DATA_BUCKET: ${opt:s3_data_bucket}
 
 functions:

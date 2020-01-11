@@ -5,7 +5,7 @@ variable "region" {
 
 variable "instance_type" {
   description = "The type of instance to start"
-  default     = "t2.micro"
+  default     = "t3a.small"
 }
 
 variable "key_name" {
@@ -20,5 +20,5 @@ variable "subnet_id" {
 
 variable "vpc_security_group_ids" {
   description = "A list of security group IDs to associate with"
-  type        = "list"
+  type        = list(string)
 }

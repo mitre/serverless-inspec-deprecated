@@ -25,13 +25,18 @@ def inspec_scan(event:, context:)
     client = Inspec::Runner.new(opts)
 
     # Set InSpec Target
-    client.add_target(ENV['INSPEC_PROFILE'],opts)
-    
+    profiles = event['inspec_profiles']
+    if ENV['INSPEC_PROFILE'].nil?
+      profiles.each do |profile|
+        client.add_target(profile,opts)
+      end
+    end
+
     # Trigger InSpec Scan
     client.run
 
     s3 = Aws::S3::Resource.new(region: 'us-east-1')
-    bucket = ENV['S3_DATA_BUCKET']
+    bucket = event['s3_bucket'] or ENV['S3_DATA_BUCKET']
     # Create the object to upload
     obj = s3.bucket(bucket).object(filename)
 

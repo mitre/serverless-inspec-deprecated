@@ -7,7 +7,7 @@ sudo yum -y install docker nano git
 systemctl start docker && systemctl enable docker
 
 # Setup node.js repo
-curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
+curl -sL https://rpm.nodesource.com/setup_13.x | sudo bash -
 
 # Install node.js
 sudo yum -y install nodejs
