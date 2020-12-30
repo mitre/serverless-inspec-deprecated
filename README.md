@@ -165,6 +165,14 @@ The Lambda function can be invoked in a generic manner that accepts parameters t
 }
 ```
 
+```json
+{
+  "s3_bucket": "",
+  "inspec_profiles": ["https://github.com/martezr/serverless-inspec-profile"],
+  "backend": "aws"
+}
+```
+
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | inspec_profiles | The github url of the InSpec profile(s) to run | array | `-` | yes |

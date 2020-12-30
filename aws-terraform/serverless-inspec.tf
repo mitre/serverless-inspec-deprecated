@@ -62,6 +62,17 @@ data "aws_iam_policy_document" "serverless-inspec" {
   }
 
   statement {
+    sid    = "CloudWatchAccess"
+    effect = "Allow"
+    actions = [
+      "events:PutRule",
+      "events:DescribeRule",
+      "events:DeleteRule"
+    ]
+    resources = ["*"]
+  }
+
+  statement {
     sid    = "IAMAccess"
     effect = "Allow"
     actions = [

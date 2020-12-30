@@ -19,6 +19,19 @@ functions:
     handler: handler.inspec_scan
     layers:
       - {Ref: InspecLambdaLayer }
+  scheduled_inspec_scan:
+    handler: handler.inspec_scan
+    layers:
+      - {Ref: InspecLambdaLayer}
+    events:
+    - schedule:
+      rate: rate(10 minutes)
+      enabled: true
+      input:
+        s3_bucket: ${opt:s3_data_bucket}
+        inspec_profiles: ["https://github.com/martezr/serverless-inspec-profile"]
+        stageParams:
+          stage: ${opt:stage, 'dev'}
 
 layers:
   inspec:
