@@ -170,22 +170,26 @@ The Lambda function can be invoked in a generic manner that accepts parameters t
 | inspec_profiles | The github url of the InSpec profile(s) to run | array | `-` | yes |
 | s3_bucket | The name of the Amazon Web Services (AWS) S3 bucket to store the JSON output file | string | `-` | yes |
 
-## License
+## Special Thanks
+
+Special Thanks to Martez Reed for the orginal start on this work and helping the community get a great start on this effort.
 
 |                |                                                  |
 | -------------- | ------------------------------------------------ |
-| **Author:**    | Martez Reed (<martez.reed@greenreedtech.com>)    |
-| **Copyright:** | Copyright (c) 2018-2019 Green Reed Technology    |
-| **License:**   | Apache License, Version 2.0                      |
+| **Orginal Contributor:**    | Martez Reed (<martez.reed@greenreedtech.com>)    |
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+### NOTICE
 
-    http://www.apache.org/licenses/LICENSE-2.0
+© 2019-2021 The MITRE Corporation.
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+Approved for Public Release; Distribution Unlimited. Case Number 18-3678.
+
+### NOTICE
+
+MITRE hereby grants express written permission to use, reproduce, distribute, modify, and otherwise leverage this software to the extent permitted by the licensed terms provided in the LICENSE.md file included with this project.
+
+### NOTICE
+
+This software was produced for the U. S. Government under Contract Number HHSM-500-2012-00008I, and is subject to Federal Acquisition Regulation Clause 52.227-14, Rights in Data-General.
+
+No other use other than that granted to the U. S. Government, or to those acting on behalf of the U. S. Government under that Clause is authorized without the express written permission of The MITRE Corporation.
